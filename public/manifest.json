@@ -1,0 +1,11 @@
+{
+  "name": "FARM.RAJ",
+  "short_name": "FARM.RAJ",
+  "description": "खेती की हर जानकारी, हर किसान के लिए",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFF8E1",
+  "theme_color": "#1B5E20",
+  "lang": "hi",
+  "icons": [{ "src": "/icon.png", "sizes": "512x512", "type": "image/png" }]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "farm-raj",
+  "version": "1.0.0",
+  "description": "FARM.RAJ — Rajasthan farmer-first digital agriculture platform (farmer PWA + services API + department admin & analytics). Proposed platform for Rajasthan Innovation Challenge.",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node --test tests/rules.test.js tests/api.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "UNLICENSED",
+  "private": true
+}
