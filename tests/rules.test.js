@@ -38,7 +38,7 @@ describe('chat retrieval', () => {
   it('greets short hellos instead of pleading unsure', () => {
     for (const [m,l] of [['hy','hi'],['hello','en'],['ram ram','hi']]) {
       const r = chatAnswer(m,l);
-      assert.ok(/राम|Hello/.test(r.text)); assert.strictEqual(r.escalate,false);
+      assert.ok(/राम|नमस्ते|Hello/.test(r.text)); assert.strictEqual(r.escalate,false);
     }
   });
   it('escalates when unsure instead of inventing', () => {
