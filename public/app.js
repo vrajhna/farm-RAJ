@@ -57,9 +57,18 @@ $('#scrim').onclick=()=>{$('#side').classList.remove('open');$('#scrim').classLi
 /* ---------- HOME ---------- */
 async function pHome(){track('page_view');
 const DL=(LANG!=='hi'&&LANG!=='en');
-app.innerHTML=`<div class="hero-photo"><div class="grid"><div>${ph(PH.heroA,hi('राजस्थान का किसान — खेत में','Rajasthan farmer in field'))}</div><div class="stack">${ph(PH.heroB,hi('ट्रैक्टर से जुताई','Tractor tilling'))}${ph(PH.heroC,hi('हरी फसल','Green crop'))}</div></div>
-<div class="hero-cap"><h1>${t('greet')}<br>${t('gsub')}</h1><p>${t('tag')}</p>
-<div class="searchbar"><input id="q" placeholder="${t('search_ph')}"><button onclick="doSearch()">🔍</button><button onclick="listen(document.querySelector('#q'))" title="voice">🎤</button></div></div></div>
+const SLIDES=[
+ {img:PH.heroA,cap:hi('रबी बुवाई का समय','Rabi sowing time'),sub:hi('गेहूं-सरसों नवंबर मध्य तक','Wheat-mustard by mid-Nov')},
+ {img:PH.tractor,cap:hi('यंत्र से आधुनिक खेती','Modern machines'),sub:hi('कस्टम हायरिंग से किराए पर लें','Hire via custom hiring')},
+ {img:PH.cattle,cap:hi('पशुधन = अतिरिक्त आय','Livestock = extra income'),sub:hi('गीर, मुर्रा, सिरोही','Gir, Murrah, Sirohi')},
+ {img:PH.market,cap:hi('सही भाव पर बेचें','Sell at right price'),sub:hi('मंडी भाव तुलना + e-NAM','Compare rates + e-NAM')},
+ {img:PH.fort,cap:hi('वीरों की धरती का गौरव','Land of warriors'),sub:hi('राजस्थान विरासत','Rajasthan heritage')},
+ {img:PH.paddy,cap:hi('पानी की हर बूंद कीमती','Every drop counts'),sub:hi('ड्रिप पर 55% तक अनुदान','Up to 55% drip subsidy')},
+];
+app.innerHTML=`<div class="slideshow" id="ss"><div class="slides" id="ssTrack">${SLIDES.map(s=>`${ph(s.img,s.cap)}`).join('')}</div>
+<div class="ss-cap"><h1>${t('greet')}<br>${t('gsub')}</h1><p id="ssCap">${esc(SLIDES[0].cap)} — ${esc(SLIDES[0].sub)}</p>
+<div class="searchbar"><input id="q" placeholder="${t('search_ph')}"><button onclick="doSearch()">🔍</button><button onclick="listen(document.querySelector('#q'))" title="voice">🎤</button></div></div>
+<div class="ss-dots" id="ssDots">${SLIDES.map((_,i)=>`<i class="${i===0?'on':''}"></i>`).join('')}</div></div></div>
 <div class="grid6">
 <a class="svc" href="/education" data-link><span>📚</span>${t('s_learn')}<small>${t('s_learn_s')}</small></a>
 <a class="svc" href="/schemes" data-link><span>🏛️</span>${t('s_sch')}<small>${t('s_sch_s')}</small></a>
@@ -84,6 +93,10 @@ app.innerHTML=`<div class="hero-photo"><div class="grid"><div>${ph(PH.heroA,hi('
 <div class="card"><h2>${hi('किसान सेवाएं','Farmer services')}</h2><p>🧾 ${hi('राज किसान • SSO/जन आधार (अनुमति हेतु लंबित) • मृदा कार्ड • KCC —','Raj Kisan • SSO/Jan Aadhaar (pending auth) • soil card • KCC —')} <a href="/services" data-link>${hi('सेवाएं खोलें','open services')}</a></p>
 <p>💬 ${hi('सुझाव देना हो तो','To give feedback')} <a href="/feedback" data-link>${hi('यहां बताएं','tell us here')}</a> • 📞 Kisan Call Centre: <b>1800-180-1551</b></p></div>
 <div class="footer">FARM.RAJ प्रस्तावित मंच • WebStudio/Vrajhna Technologies • ${hi('डेमो डेटा स्पष्ट चिह्नित','Demo data clearly marked')} • <a href="/about" data-link>About</a></div>`;
+const ssTrack=$('#ssTrack'),ssCap=$('#ssCap'),ssDots=$('#ssDots');
+if(ssTrack){let ssi=0;const n=SLIDES.length;const show=i=>{ssi=(i+n)%n;ssTrack.style.transform='translateX(-'+(ssi*100)+'%)';if(ssCap)ssCap.textContent=SLIDES[ssi].cap+' \u2014 '+SLIDES[ssi].sub;if(ssDots)ssDots.innerHTML=SLIDES.map((_,j)=>'<i class="'+(j===ssi?'on':'')+'"></i>').join('');};
+if(window._ssT)clearInterval(window._ssT);window._ssT=setInterval(()=>show(ssi+1),4000);
+const ssEl=$('#ss');if(ssEl){let tx=null;ssEl.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;if(window._ssT)clearInterval(window._ssT);},{passive:true});ssEl.addEventListener('touchend',e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx;show(ssi+(dx<-40?1:dx>40?-1:0));if(window._ssT)clearInterval(window._ssT);window._ssT=setInterval(()=>show(ssi+1),4000);tx=null;},{passive:true});}}
 const {d}=await api('GET','/api/schemes');const pop=(d.schemes||[]).slice(0,4);
 $('#popS').innerHTML=pop.map(s=>`<div class="scheme"><b>${esc(LANG==='en'?s.name_en:s.name_hi)}</b> <span class="badge ${s.type==='state'?'b-orange':'b-green'}">${s.type==='state'?hi('राज्य','State'):hi('केंद्र','Centre')}</span><div class="kv"><span>✅ ${esc(LANG==='en'?s.benefit_en:s.benefit_hi).slice(0,90)}…</span></div><a href="/schemes/${s.id}" data-link>${hi('विवरण →','Details →')}</a></div>`).join('');
 try{const n=await api('GET','/api/news');const items=n.d.news||[];
@@ -439,7 +452,7 @@ ${slides.map((s,i)=>`<div class="card" style="border-top:6px solid var(--green2)
 
 /* ---------- ROUTER ---------- */
 const EDU_SLUGS={'crops':'crops','soil':'soil','seeds':'seeds','irrigation':'irrigation','organic-farming':'organic','livestock':'livestock','machinery':'machinery','pest-management':'pest','harvesting':'harvest','business':'business','rajasthan-heritage':'history','heritage':'history'};
-async function route(){chrome();window.scrollTo(0,0);
+async function route(){if(window._ssT)clearInterval(window._ssT);chrome();window.scrollTo(0,0);
 const path=location.pathname, q=new URLSearchParams(location.search);
 try{
 if(path==='/')return pHome();

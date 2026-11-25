@@ -14,22 +14,7 @@
 <div id="topbar">
   <button id="menuBtn" aria-label="Menu">☰</button>
   <a href="/" data-link class="brand"><span class="logo">🌾</span><span><b>FARM.RAJ</b><small id="tagline">खेती की हर जानकारी, हर किसान के लिए</small></span></a>
-  <div class="top-actions">
-    <button id="micTop" title="Voice search / आवाज़">🎤</button>
-    <button id="speakTop" title="Read aloud / सुनें">🔊</button>
-    <button id="fontBtn" title="Large text">अ+</button>
-    <button id="imgBtn" title="Low-bandwidth: hide photos">🖼️</button>
-    <select id="langSel" aria-label="Language / भाषा">
-      <option value="hi">हिंदी</option>
-      <option value="mwr">मारवाड़ी</option>
-      <option value="bgq">बागड़ी</option>
-      <option value="mew">मेवाड़ी</option>
-      <option value="dhd">ढूंढाड़ी</option>
-      <option value="hoj">हाड़ौती</option>
-      <option value="mwt">मेवाती</option>
-      <option value="en">English</option>
-    </select>
-  </div>
+  <a href="/chat" data-link class="topchat" aria-label="Ask">🤖</a>
 </div>
 <nav id="side" aria-label="Main">
   <a href="/" data-link>🏠 <span data-i18n="nav_home">होम</span></a>
@@ -45,6 +30,26 @@
   <a href="/crop-doctor" data-link>📸 Crop Doctor</a>
   <a href="/marketplace" data-link>🤝 <span data-i18n="nav_market">बाज़ार</span></a>
   <a href="/feedback" data-link>💬 <span data-i18n="nav_feedback">सुझाव</span></a>
+  <hr>
+  <div class="menu-ctl">
+    <label>🌐 Language / भाषा</label>
+    <select id="langSel" aria-label="Language / भाषा">
+      <option value="hi">हिंदी</option>
+      <option value="mwr">मारवाड़ी</option>
+      <option value="bgq">बागड़ी</option>
+      <option value="mew">मेवाड़ी</option>
+      <option value="dhd">ढूंढाड़ी</option>
+      <option value="hoj">हाड़ौती</option>
+      <option value="mwt">मेवाती</option>
+      <option value="en">English</option>
+    </select>
+    <div class="menu-btns">
+      <button id="micTop" title="Voice search">🎤 <small>बोलें</small></button>
+      <button id="speakTop" title="Read aloud">🔊 <small>सुनें</small></button>
+      <button id="fontBtn" title="Large text">अ+ <small>बड़ा</small></button>
+      <button id="imgBtn" title="Low-bandwidth">🖼️ <small>फोटो बंद</small></button>
+    </div>
+  </div>
   <hr>
   <a href="/admin" data-link>🔐 <span data-i18n="nav_admin">विभाग लॉगिन</span></a>
   <a href="/analytics" data-link>📊 <span data-i18n="nav_analytics">एनालिटिक्स</span></a>
