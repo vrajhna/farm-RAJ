@@ -120,7 +120,8 @@ ${(LANG!=='hi'&&LANG!=='en')?`<div class="alert">🗣️ ${hi('पाठ हि�
 <div id="les"></div></div>`;
 window._curCat=cat;
 window.searchEdu=()=>go('/education?cat='+encodeURIComponent(window._curCat||'')+'&q='+encodeURIComponent($('#eq').value));
-const {d}=await api('GET','/api/lessons?cat='+encodeURIComponent(cat)+'&q='+encodeURIComponent(query));
+const {s:ls,d}=await api('GET','/api/lessons?cat='+encodeURIComponent(cat)+'&q='+encodeURIComponent(query));
+if(ls!==200){$('#les').innerHTML=`<div class="alert red">🔌 ${hi('सर्वर से कनेक्ट नहीं हो रहा — कनेक्शन जांचें और पुनः प्रयास करें।','Cannot reach server — check connection and retry.')} <button class="btn sec" onclick="route()">↻ ${hi('पुनः प्रयास','Retry')}</button></div>`;return;}
 $('#les').innerHTML=(d.lessons||[]).map(l=>`<div class="lesson"><b>📖 ${esc(LANG==='en'?l.title_en:l.title_hi)}</b><div class="kv"><span>⏱ ${l.duration_min} min</span><span>📶 ${l.level}</span><button class="chip" onclick="speak('${esc((LANG==='en'?l.title_en:l.title_hi)).slice(0,60)}')">🔊 ${hi('सुनें','Listen')}</button></div><a class="btn" href="/education/${l.id}" data-link>${hi('पाठ पढ़ें','Read lesson')}</a></div>`).join('')||'<p>'+hi('कोई पाठ नहीं मिला','No lessons found')+'</p>';
 }
 async function pLesson(id){const {d}=await api('GET','/api/lessons/'+id);const l=d.lesson;if(!l){app.innerHTML='<p>Not found</p>';return;}track('page_view',{lesson:id});
@@ -236,6 +237,7 @@ if(o.done){meta=o;}
 }catch(e){}}}
 }catch(e){gotStream=false;}
 const finish=(reply,engine,sources)=>{const e=document.querySelector('#typing');
+if(!reply)reply=hi('⚠️ जवाब नहीं मिला — कनेक्शन जांचें और दोबारा पूछें।','⚠️ No answer — check connection and ask again.');
 if(e)e.outerHTML=`<div class="msg b">${esc(reply).replace(/\n/g,'<br>')}<small>📚 ${esc((sources||[]).join(' • ')).slice(0,220)}${engine?' • 🤖 '+esc(engine):''} • ⚡ ${((Date.now()-t0)/1000).toFixed(1)}s</small><div><button class="chip" onclick="speak(this.parentElement.parentElement.textContent.slice(0,300))">🔊</button> <button class="chip" onclick="rateChat(1)">👍</button> <button class="chip" onclick="rateChat(0)">👎</button> <button class="chip" onclick="go('/schemes/finder')">🎯 ${hi('योजना खोजें','Find schemes')}</button> <button class="chip" onclick="webAsk('${esc(msg).slice(0,60)}')">🌐 Web</button></div></div>`;
 cb.scrollTop=1e6;const h=JSON.parse(localStorage.getItem('fr-chat')||'[]');h.push({w:'u',t:msg},{w:'b',t:reply,s:(sources||[]).join(',')});localStorage.setItem('fr-chat',JSON.stringify(h.slice(-30)));
 const eb=$('#engB');if(eb&&engine){eb.textContent='🤖 '+engine;eb.className='badge '+(String(engine).startsWith('meta')?'b-green':'b-grey');}};

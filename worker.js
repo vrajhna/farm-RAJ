@@ -4,7 +4,8 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     if (url.pathname.startsWith('/api/')) {
-      const back = (env.BACKEND_URL || '').replace(/\/+$/, '');
+      // Railway URL: dashboard BACKEND_URL wins; hardcoded fallback keeps the demo alive
+      const back = (env.BACKEND_URL || 'https://web-production-bd853d61.up.railway.app').replace(/\/+$/, '');
       if (!back) {
         return new Response(JSON.stringify({ error: 'backend not configured', hint: 'Set BACKEND_URL in Worker Variables to the Railway URL' }), {
           status: 503, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
