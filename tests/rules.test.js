@@ -35,6 +35,12 @@ describe('chat retrieval', () => {
     const r = chatAnswer('PM-KISAN kaise milega?', 'hi');
     assert.match(r.text, /pmkisan/i);
   });
+  it('greets short hellos instead of pleading unsure', () => {
+    for (const [m,l] of [['hy','hi'],['hello','en'],['ram ram','hi']]) {
+      const r = chatAnswer(m,l);
+      assert.ok(/राम|Hello/.test(r.text)); assert.strictEqual(r.escalate,false);
+    }
+  });
   it('escalates when unsure instead of inventing', () => {
     const r = chatAnswer('xyzzy quantum tractor', 'en');
     assert.strictEqual(r.escalate, true);

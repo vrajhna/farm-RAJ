@@ -134,6 +134,10 @@ app.innerHTML=`<div class="hero-photo"><div class="grid" style="grid-template-co
 <p id="ltext">${esc(LANG==='en'?l.text_en:l.text_hi)}</p>
 <h3>🪜 ${hi('चरण-दर-चरण प्रक्रिया','Step-by-step process')}</h3>
 ${(LANG==='en'?l.steps_en:l.steps_hi).map((s,i)=>`<div class="step"><b>${hi('चरण','Step')} ${i+1}:</b> ${esc(s)}</div>`).join('')}
+${l.guide?`<div class="card" style="background:#F1F8E9"><h3>📖 ${esc(LANG==='en'?l.guide.title_en:l.guide.title_hi)}</h3>${(LANG==='en'?l.guide.detail_en:l.guide.detail_hi).map(x=>`<p>${esc(x)}</p>`).join('')}
+<div class="alert">💰 <b>${hi('लागत-लाभ','Cost-benefit')}:</b> ${esc(LANG==='en'?l.guide.cost_en:l.guide.cost_hi)}</div>
+<h3>⚠️ ${hi('आम गलतियां','Common mistakes')}</h3>${(LANG==='en'?l.guide.mistakes_en:l.guide.mistakes_hi).map(m=>`<div class="step">❌ ${esc(m)}</div>`).join('')}
+<h3>❓ ${hi('अक्सर पूछे जाने वाले प्रश्न','FAQs')}</h3>${(LANG==='en'?l.guide.faq_en:l.guide.faq_hi).map(f=>`<div class="lesson"><b>Q: ${esc(f[0])}</b><p>A: ${esc(f[1])}</p></div>`).join('')}</div>`:''}
 ${rel.length?`<h3>🔗 ${hi('संबंधित पाठ','Related lessons')}</h3>`+rel.map(r=>`<div class="lesson"><b>📖 ${esc(LANG==='en'?r.title_en:r.title_hi)}</b><br><a class="btn sec" href="/education/${r.id}" data-link>${t('read')} →</a></div>`).join(''):''}
 <div class="alert">📞 ${hi('शंका हो तो कृषि पर्यवेक्षक / KCC 1800-180-1551 से पूछें। कीटनाशक मात्रा केवल अधिकारी/लेबल अनुसार।','Ask your agri supervisor / KCC 1800-180-1551. Pesticide dose only per officer/label.')}</div>
 <a class="btn sec" href="/chat" data-link>🤖 ${hi('सहायक से पूछें','Ask assistant')}</a> <a class="btn sec" href="/library" data-link>📖 ${hi('संबंधित गाइड','Related guides')}</a></div>`;

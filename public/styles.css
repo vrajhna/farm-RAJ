@@ -90,7 +90,7 @@ body{font-size:15px;line-height:1.5}
 .menu-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
 .menu-btns button{background:#F1F8E9;border:1.5px solid var(--green2);color:var(--green);border-radius:10px;padding:9px 4px;font-size:17px;cursor:pointer}
 .menu-btns small{display:block;font-size:11px;font-weight:700}
-.slideshow{position:relative;border-radius:20px;overflow:hidden;box-shadow:var(--shadow);background:#1B5E20}
+.slideshow{position:relative;border-radius:20px;overflow:hidden;box-shadow:var(--shadow);background:linear-gradient(135deg,#1B5E20,#33691E);min-height:340px}
 .slides{display:flex;transition:transform .65s ease}
 .slides img{width:100%;flex-shrink:0;height:300px;object-fit:cover}
 .ss-cap{position:absolute;left:0;right:0;bottom:0;padding:30px 16px 30px;background:linear-gradient(transparent,rgba(0,0,0,.75));color:#fff}
